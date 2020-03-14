@@ -13,9 +13,9 @@ const Spinner = () => {
     
     const playSpin = () => {
         myTween
-        .to( dot1Item, .2, {x:'0px', ease: Power3.easeOut})
-        .to( dot2Item, .2, {x:'7px', ease: Power3.easeOut})
-        .to( dot3Item, .2, {x:'14px', ease: Power3.easeOut})
+        .to( dot1Item, .2, {x:0, ease: Power3.easeOut})
+        .to( dot2Item, .2, {x:7, ease: Power3.easeOut})
+        .to( dot3Item, .2, {x:14, ease: Power3.easeOut})
         .to([dot1Item,dot2Item,dot3Item],{
             y: -10,
             ease: Power3.easeOut,
