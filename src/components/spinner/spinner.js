@@ -20,15 +20,9 @@ const Spinner = () => {
 
       
         myTween
-<<<<<<< HEAD
         .to(dot1Item, {duration: .2, x:14, ease: "power3.easeOut"})
         .to(dot2Item, {duration: .2, x:21, ease: "power3.easeOut"})
         .to(dot3Item, {duration: .2, x:28, ease: "power3.easeOut"})
-=======
-        .to(dot1Item, {duration: .2, x:0, ease: "power3.easeOut"})
-        .to(dot2Item, {duration: .2, x:7, ease: "power3.easeOut"})
-        .to(dot3Item, {duration: .2, x:14, ease: "power3.easeOut"})
->>>>>>> 20f64c98928dabbfad2950df6740800eaf14090e
         .to([dot1Item,dot2Item,dot3Item],{
             y: -10,
             ease: "power3.easeOut",
