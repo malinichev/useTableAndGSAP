@@ -4,7 +4,10 @@ import * as axios from 'axios'
 var axiosInstance = axios.create({
     // baseURL: 'https://my-json-server.typicode.com/typicode/demo'
     baseURL: 'https://jsonplaceholder.typicode.com',
-    headers: {'Content-Type': 'application/json'}
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    }
   });
 
 

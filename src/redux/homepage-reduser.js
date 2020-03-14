@@ -1,5 +1,6 @@
 import {getPostApi, getUsersApi,delPostApi, updatePostApi} from '../api';
 import {postIsSend} from './editpage-reduser';
+import {stopSubmit} from 'redux-form';
 
 
 
@@ -9,6 +10,7 @@ const SET_USER = 'SET_USER';
 const SELECT_USER = 'SELECT_USER';
 const UPDATE_POST = 'UPDATE_POST';
 const DEL_POST = 'DEL_POST';
+const IS_ERROR = 'IS_ERROR';
 
 
 const initState = {
@@ -20,7 +22,8 @@ const initState = {
         selectedUser:{
             userName: 'Select User',
             userId: null
-        }
+        },
+        isError:false
         
     
 };
@@ -32,6 +35,12 @@ const homepageReduser = (state = initState, action) => {
             return {
                 ...state,
                 isLoad: action.isDataLoad  
+            };
+        case IS_ERROR:
+            return {
+                ...state,
+                isLoad: false,
+                isError: action.err  
             };
         case SET_POST:
             return {
@@ -80,6 +89,11 @@ export const isDataLoad = (isDataLoad) => ({
     type: IS_DATA_LOAD,
     isDataLoad
 })
+export const isError = (err) => ({
+
+    type: IS_ERROR,
+    err
+})
 export const setPost = (posts) => ({
     type: SET_POST,
     posts
@@ -116,13 +130,20 @@ export const getPost = () => {
 export const updatePostData = (postData) => {
     return (dispatch) => {
         dispatch(isDataLoad(false));
+        
         updatePostApi(postData)
             .then(res => {
                 dispatch(updatePost(res));
                 dispatch(postIsSend());
                 dispatch(isDataLoad(true));
             })
-            .catch(err=>console.log('errrr'));
+            .catch(err=>{
+                let action = stopSubmit('editPostForm', {_error:'Something wrong!! Try ealse!!'});
+                dispatch(action);
+                
+                dispatch(isDataLoad(true));
+                console.log('errrr')
+            });
     }
 }  
 export const getUser = () => {
@@ -130,7 +151,7 @@ export const getUser = () => {
         dispatch(isDataLoad(false));
         getUsersApi()
             .then(res => {
-                // console.log(res)
+                // Add ALL USER
                 const Alluser = 
                     {
                         id: null,
@@ -140,7 +161,12 @@ export const getUser = () => {
                 dispatch(setUser(res))
                 dispatch(isDataLoad(true)) 
             })
-            .catch(err=>console.log('errrr'));
+            .catch(err=>{
+                
+                console.log('errrr')
+
+            })
+            ;
             
     }
 } 
@@ -157,12 +183,25 @@ export const setSelectedUserinState = (selectedUserName,selectedUserId) => {
 export const delOnePost = (postId) => {
     return (dispatch) => {
         dispatch(isDataLoad(false));
+        setTimeout(() => {
+            dispatch(isError(true))
+          }, 5000)
         delPostApi(postId)
         .then(res => {
+            dispatch(isError(false))
             dispatch(delPost(postId))
+            
             dispatch(isDataLoad(true))
         })
-        .catch(err=>console.log('errrr'));            
+        .catch(err=>{
+            dispatch(isError(true))
+            dispatch(delPost(postId))
+            dispatch(isDataLoad(true))
+            setTimeout(() => {
+                dispatch(isError(false))
+              }, 15000)
+            console.log('errrr')
+        });            
     }
 } 
 

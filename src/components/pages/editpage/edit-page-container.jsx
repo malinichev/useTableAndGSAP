@@ -11,7 +11,6 @@ import {updatePostData} from '../../../redux/homepage-reduser';
 class EditPageContainerApi extends React.Component {
     render(){
         if(this.props.isPostUpdate) {
-
             return <Redirect to={'/'} />
         }
         const idPost = this.props.postId

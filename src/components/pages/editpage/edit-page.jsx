@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Alert} from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form'
 
 const EditPage = (props) =>{
@@ -21,6 +21,7 @@ const EditPage = (props) =>{
         return (
             <>
                 <Form style={{width:'50%', margin:'20px auto'}} onSubmit={props.handleSubmit(props.editPostOnSubmit)}>
+                    
                     <Form.Group controlId="formGroupTitle">
                         <Form.Label>Title</Form.Label>
                         <Field name={'title'}  className='form-control' component={'input'}/>
@@ -36,6 +37,15 @@ const EditPage = (props) =>{
                         <Field type="hidden" name={'userId'} component={'input'}/>
                     
                     <button className='btn btn-primary'>Submit</button>
+                    <div style={{marginTop:"10px"}}>
+                        {
+                        props.error ? 
+                        <Alert  variant='danger'>
+                                Error    {props.error}
+                        </Alert>
+                        : <span></span>
+                        }
+                    </div>
                 </Form>
             </>
         );
