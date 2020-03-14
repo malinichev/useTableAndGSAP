@@ -1,6 +1,11 @@
 import React,{useEffect, useRef} from 'react';
 import style from './spinner.module.css';
-import { TimelineLite, Power3} from 'gsap'
+import { gsap } from "gsap";
+import { CSSRulePlugin } from "gsap/CSSRulePlugin";
+import { EaselPlugin } from "gsap/EaselPlugin";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+
+gsap.registerPlugin(CSSRulePlugin, EaselPlugin, MotionPathPlugin);
 
 const Spinner = () => {
     
@@ -9,16 +14,18 @@ const Spinner = () => {
     let dot3Item = useRef(null); 
 
 
-    let myTween = new TimelineLite({ paused: true });
+    let myTween = gsap.timeline({ paused: true });
     
     const playSpin = () => {
+
+      
         myTween
-        .to( dot1Item, .2, {x:0, ease: Power3.easeOut})
-        .to( dot2Item, .2, {x:7, ease: Power3.easeOut})
-        .to( dot3Item, .2, {x:14, ease: Power3.easeOut})
+        .to(dot1Item, {duration: .2, x:0, ease: "power3.easeOut"})
+        .to(dot12tem, {duration: .2, x:7, ease: "power3.easeOut"})
+        .to(dot13tem, {duration: .2, x:14, ease: "power3.easeOut"})
         .to([dot1Item,dot2Item,dot3Item],{
             y: -10,
-            ease: Power3.easeOut,
+            ease: "power3.easeOut",
             stagger:{
                 repeat: -1,
                 each: 0.2,
