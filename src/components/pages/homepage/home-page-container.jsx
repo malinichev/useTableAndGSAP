@@ -10,9 +10,7 @@ import preloader from './Ellipsis200.svg'
 
 class HomePageContainerApi extends React.Component {
     componentDidMount(){
-      
       this.props.sendUpdatePost()
-      
     }
 
     render(){
@@ -22,8 +20,8 @@ class HomePageContainerApi extends React.Component {
       const delPost = (id) =>{
         this.props.delOnePost(id);
       }
-
-      if(!!this.props.isDataLoad){
+      
+      if(!!this.props.posts.length && this.props.posts.length > 1 ){
         return(
           <>
             <UserInfo users={this.props.users} 

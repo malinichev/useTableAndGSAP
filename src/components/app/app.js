@@ -15,7 +15,7 @@ import './app.css';
 
 
 const App =  (props) => {
-  // eslint-disable-next-line
+  
   useEffect(() => {
     props.getUser()
     props.getPost()
