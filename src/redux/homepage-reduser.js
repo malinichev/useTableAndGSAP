@@ -183,11 +183,14 @@ export const setSelectedUserinState = (selectedUserName,selectedUserId) => {
 export const delOnePost = (postId) => {
     return (dispatch) => {
         dispatch(isDataLoad(false));
-        setTimeout(() => {
+        let showWorn = setTimeout(() => {
             dispatch(isError(true))
-          }, 5000)
+        }, 2500)
+        
+
         delPostApi(postId)
         .then(res => {
+            clearTimeout(showWorn);
             dispatch(isError(false))
             dispatch(delPost(postId))
             
