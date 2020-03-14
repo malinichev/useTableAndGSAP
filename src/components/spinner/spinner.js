@@ -21,8 +21,8 @@ const Spinner = () => {
       
         myTween
         .to(dot1Item, {duration: .2, x:0, ease: "power3.easeOut"})
-        .to(dot12tem, {duration: .2, x:7, ease: "power3.easeOut"})
-        .to(dot13tem, {duration: .2, x:14, ease: "power3.easeOut"})
+        .to(dot2Item, {duration: .2, x:7, ease: "power3.easeOut"})
+        .to(dot3Item, {duration: .2, x:14, ease: "power3.easeOut"})
         .to([dot1Item,dot2Item,dot3Item],{
             y: -10,
             ease: "power3.easeOut",
