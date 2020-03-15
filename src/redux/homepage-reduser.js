@@ -115,18 +115,7 @@ export const setSelectUser = (selectedUser) => ({
     selectedUser
 })
 
-export const getPost = () => {
-    return (dispatch) => {
-        dispatch(isDataLoad(false));
-        getPostApi()
-            .then(res => {
-                dispatch(setPost(res))
-                dispatch(isDataLoad(true)) 
-            })
-            .catch(err=>console.log('errrr'));
-            
-    }
-}
+
 export const updatePostData = (postData) => {
     return (dispatch) => {
         dispatch(isDataLoad(false));
@@ -146,30 +135,7 @@ export const updatePostData = (postData) => {
             });
     }
 }  
-export const getUser = () => {
-    return (dispatch) => {
-        dispatch(isDataLoad(false));
-        getUsersApi()
-            .then(res => {
-                // Add ALL USER
-                const Alluser = 
-                    {
-                        id: null,
-                        name: "Select All",
-                    }
-                res.push(Alluser)
-                dispatch(setUser(res))
-                dispatch(isDataLoad(true)) 
-            })
-            .catch(err=>{
-                
-                console.log('errrr')
 
-            })
-            ;
-            
-    }
-} 
 export const setSelectedUserinState = (selectedUserName,selectedUserId) => {
     return (dispatch) => {
         dispatch(setSelectUser({
@@ -208,6 +174,27 @@ export const delOnePost = (postId) => {
     }
 } 
 
+export const initializeApp = () => {
+    return (dispatch) => {
+        let user =  getUsersApi()
+        let posts = getPostApi()
+        dispatch(isDataLoad(false));
+        Promise.all([user,posts])
+            .then(el=>{
+                dispatch(setPost(el[1]))
+                const Alluser = 
+                    {
+                        id: null,
+                        name: "Select All",
+                    }
+                el[0].push(Alluser)
+                dispatch(setUser(el[0]))
 
+                dispatch(isDataLoad(true)) 
+                console.log(el)
+            })
+            .catch(err=>console.log('errrr'));
+    }
+}
 
 export default homepageReduser

@@ -4,14 +4,12 @@ import React from 'react';
 import HomePage from './home-page';
 import UserInfo from '../../user-info';
 import { connect } from 'react-redux';
-import {getPost, getUser, setSelectedUserinState, delOnePost} from '../../../redux/homepage-reduser';
+import { setSelectedUserinState, delOnePost} from '../../../redux/homepage-reduser';
 import {sendUpdatePost} from '../../../redux/editpage-reduser';
 import preloader from './Ellipsis200.svg'
 
 class HomePageContainerApi extends React.Component {
-    componentDidMount(){
-      this.props.sendUpdatePost()
-    }
+ 
 
     render(){
       const selectedUser = (name,id) =>{
@@ -66,7 +64,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
   }
 
 
-const HomePageContainer = connect(mapStateToProps,{sendUpdatePost,delOnePost, getPost, getUser, setSelectedUserinState})(HomePageContainerApi)
+const HomePageContainer = connect(mapStateToProps,{sendUpdatePost,delOnePost, setSelectedUserinState})(HomePageContainerApi)
 
 
 

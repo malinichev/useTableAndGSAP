@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
-import {getPost, getUser} from '../../redux/homepage-reduser';
+import {initializeApp} from '../../redux/homepage-reduser';
 
 
 
@@ -22,8 +22,8 @@ import './app.css';
 const App =  (props) => {
   
   useEffect(() => {
-    props.getUser()
-    props.getPost()
+    props.initializeApp()
+   
     // eslint-disable-next-line
   }, []);
   
@@ -68,4 +68,4 @@ const mapStateToProps = (state /*, ownProps*/) => {
 }
 
 
-export default connect(mapStateToProps,{getPost, getUser})(App)
+export default connect(mapStateToProps,{initializeApp})(App)
