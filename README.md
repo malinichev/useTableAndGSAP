@@ -2,7 +2,7 @@
 
 
 
-Вот ссылка на развернутый Docker https://react24.site
+Вот ссылка https://react24.site/tableandgsap/#/
 
 Получить список постов, используя API https://jsonplaceholder.typicode.com/posts
 
