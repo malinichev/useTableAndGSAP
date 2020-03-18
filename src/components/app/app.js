@@ -4,7 +4,7 @@ import {initializeApp} from '../../redux/homepage-reduser';
 
 
 
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, BrowserRouter, Route, Switch } from 'react-router-dom';
 import EditPageContainer from '../pages/editpage';
 import HomePageContainer from '../pages/homepage';
 import NavBar from '../navbar';
@@ -30,7 +30,7 @@ const App =  (props) => {
   
         
   return (
-    <BrowserRouter>
+    <HashRouter>
       <NavBar isDataLoad={props.isDataLoad}/>
           <Warning isError={props.isError}/>
       <Switch>
@@ -55,7 +55,7 @@ const App =  (props) => {
           />
       </Switch>
     
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
