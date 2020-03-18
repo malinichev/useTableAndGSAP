@@ -12,7 +12,7 @@ const NavGar = ({isDataLoad}) => {
   return (
     <>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand >
+        <Navbar.Brand href="/">
          
           {
             !isDataLoad

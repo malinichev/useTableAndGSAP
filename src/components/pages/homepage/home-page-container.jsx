@@ -8,8 +8,11 @@ import { setSelectedUserinState, delOnePost} from '../../../redux/homepage-redus
 import {sendUpdatePost} from '../../../redux/editpage-reduser';
 import preloader from './Ellipsis200.svg'
 
-class HomePageContainerApi extends React.Component {
- 
+class HomePageContainerApi extends React.PureComponent {
+
+    // shouldComponentUpdate(nextProps, nextState){
+    //   return nextProps !== this.props || nextState !== this.state;
+    // }
 
     render(){
       const selectedUser = (name,id) =>{
@@ -19,7 +22,8 @@ class HomePageContainerApi extends React.Component {
         this.props.delOnePost(id);
       }
       
-      if(!!this.props.posts.length && this.props.posts.length > 1 ){
+      
+      if(!!this.props.posts.length && this.props.posts.length > 0 ){
         return(
           <>
             <UserInfo users={this.props.users} 

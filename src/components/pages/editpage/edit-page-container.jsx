@@ -9,10 +9,20 @@ import {updatePostData} from '../../../redux/homepage-reduser';
 
 
 class EditPageContainerApi extends React.Component {
+    componentWillUnmount(){
+        if(this.props.isPostUpdate===true){
+        this.props.sendUpdatePost()
+        }
+    }
     render(){
+        // debugger
+        
         if(this.props.isPostUpdate) {
+            
             return <Redirect to={'/'} />
         }
+
+        
         const idPost = this.props.postId
         // eslint-disable-next-line
         let PostToEdit = this.props.posts.find(el => el.id==idPost)
@@ -39,7 +49,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
   }
 
 
-let EditPageContainer = connect(mapStateToProps,{updatePostData, sendUpdatePost})(EditPageContainerApi)
+let EditPageContainer = connect(mapStateToProps,{updatePostData,sendUpdatePost})(EditPageContainerApi)
 
 
 

@@ -10,6 +10,7 @@ const SET_USER = 'SET_USER';
 const SELECT_USER = 'SELECT_USER';
 const UPDATE_POST = 'UPDATE_POST';
 const DEL_POST = 'DEL_POST';
+const ADD_POST = 'ADD_POST';
 const IS_ERROR = 'IS_ERROR';
 
 
@@ -58,12 +59,18 @@ const homepageReduser = (state = initState, action) => {
             }
         }
         case DEL_POST:{
-            
             let idXDel = state.posts.findIndex(el=>el.id===action.postId)
             return {
                 ...state,
                 ...state.posts,
                 posts: [...state.posts.slice(0, idXDel), ...state.posts.slice(idXDel + 1)]
+            }
+        }
+        case ADD_POST:{
+            return {
+                ...state,
+                ...state.posts,
+                posts: [...state.posts, action.postData]
             }
         }
         case SET_USER:
@@ -106,6 +113,10 @@ export const delPost = (postId) => ({
     type: DEL_POST,
     postId
 })
+export const addPost = (postData) => ({
+    type: ADD_POST,
+    postData
+})
 export const setUser = (users) => ({
     type: SET_USER,
     users
@@ -116,25 +127,24 @@ export const setSelectUser = (selectedUser) => ({
 })
 
 
-export const updatePostData = (postData) => {
-    return (dispatch) => {
-        dispatch(isDataLoad(false));
-        
-        updatePostApi(postData)
-            .then(res => {
+export const updatePostData = (postData) => async  (dispatch) => {    
+        try {
+            dispatch(isDataLoad(false));
+            let res = await updatePostApi(postData)
                 dispatch(updatePost(res));
                 dispatch(postIsSend());
                 dispatch(isDataLoad(true));
-            })
-            .catch(err=>{
-                let action = stopSubmit('editPostForm', {_error:'Something wrong!! Try ealse!!'});
+          } 
+        catch(err) {
+            let action = stopSubmit('editPostForm', {_error:'Something wrong!! Try ealse!!'});
                 dispatch(action);
                 
                 dispatch(isDataLoad(true));
                 console.log('errrr')
-            });
-    }
+          }
+
 }  
+ 
 
 export const setSelectedUserinState = (selectedUserName,selectedUserId) => {
     return (dispatch) => {
@@ -146,23 +156,21 @@ export const setSelectedUserinState = (selectedUserName,selectedUserId) => {
     }
 }
 
-export const delOnePost = (postId) => {
-    return (dispatch) => {
-        dispatch(isDataLoad(false));
-        let showWorn = setTimeout(() => {
-            dispatch(isError(true))
-        }, 2500)
-        
+export const delOnePost = (postId) => async (dispatch)=>{
+    dispatch(isDataLoad(false));
 
-        delPostApi(postId)
-        .then(res => {
-            clearTimeout(showWorn);
-            dispatch(isError(false))
-            dispatch(delPost(postId))
-            
-            dispatch(isDataLoad(true))
-        })
-        .catch(err=>{
+    let showWorn = setTimeout(() => {
+        dispatch(isError(true))
+    }, 2500)
+        try{
+                await delPostApi(postId);
+                clearTimeout(showWorn);
+                dispatch(isError(false))
+                dispatch(delPost(postId))
+                dispatch(isDataLoad(true))
+
+        }
+        catch(err){
             dispatch(isError(true))
             dispatch(delPost(postId))
             dispatch(isDataLoad(true))
@@ -170,17 +178,18 @@ export const delOnePost = (postId) => {
                 dispatch(isError(false))
               }, 15000)
             console.log('errrr')
-        });            
-    }
+        }        
+    
 } 
 
-export const initializeApp = () => {
-    return (dispatch) => {
-        let user =  getUsersApi()
-        let posts = getPostApi()
+export const initializeApp = () => async (dispatch) => {
+
+    try{
+        let user = await getUsersApi()
+        let posts = await getPostApi()
         dispatch(isDataLoad(false));
-        Promise.all([user,posts])
-            .then(el=>{
+        let el = await Promise.all([user,posts])
+            
                 dispatch(setPost(el[1]))
                 const Alluser = 
                     {
@@ -191,10 +200,14 @@ export const initializeApp = () => {
                 dispatch(setUser(el[0]))
 
                 dispatch(isDataLoad(true)) 
-                console.log(el)
-            })
-            .catch(err=>console.log('errrr'));
+                // console.log(el)
+    }catch(err){
+        console.log('errrr')
     }
+        
+            
+            
+    
 }
 
 export default homepageReduser

@@ -224,7 +224,7 @@ filterGreaterThan.autoRemove = val => typeof val !== 'number'
 
 
 function HomePage({posts, delPost}) {
-    // console.log(posts)
+  
   const columns = React.useMemo(
     () => [
       

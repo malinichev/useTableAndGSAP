@@ -2,8 +2,8 @@ import * as axios from 'axios'
 
 
 var axiosInstance = axios.create({
-    // baseURL: 'https://my-json-server.typicode.com/typicode/demo'
     baseURL: 'https://jsonplaceholder.typicode.com',
+    // baseURL: 'https://my-json-server.typicode.com/malinichev/myApi',
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
